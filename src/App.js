@@ -8,7 +8,13 @@ function App() {
     <div className="app">
 
       <div className="app__videos">
-        <Video />
+        <Video url= "https://youtu.be/vM6T5s6HlTg"
+        channel="Rambo"
+        description="This is a MERN stack Tik Tok"
+        song="Rocking Out With React"
+        likes={324}
+        messages={98}
+        shares={23} />
         <Video />
       </div>
       
