@@ -18,14 +18,17 @@ function Video() {
 
     return (
         <div className="video">
+            
             <video 
                 onClick={handleVideoPress}
                 className="video__player" 
                 loop 
                 ref={videoRef}
-                src="https://player.vimeo.com/video/306969314\">
+                src="https://www.youtube.com/embed/bKxL536zqro">
+                    
 
             </video>
+            
 
             <VideoFooter />
             
