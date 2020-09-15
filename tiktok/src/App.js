@@ -1,37 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "./axios";
 import './App.css';
 import Video from "./Video";
 
 function App() {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(()=> {
+    async function fetchPosts() {
+      const response = await axios.get("/v2/posts");
+      setVideos(response.data);
+
+      return response;
+    }
+
+    fetchPosts();
+  }, []); 
+
+  console.log(videos);
+
+
   return (
     //BEM naming convention
     <div className="app">
 
       <div className="app__videos">
-        <Video url= "https://youtu.be/vM6T5s6HlTg"
-        channel="Rambo"
-        description="This is a MERN stack Tik Tok"
-        song="Rocking Out With React"
-        likes={324}
-        messages={98}
-        shares={23} />
-        <Video url= "https://www.facebook.com/watch/?v=911824239323630&extid=9zwofduiNjqgMPLV"
-        channel="Crazy"
-        description="This is also MERN stack Tik Tok"
-        song="Partying with Node"
-        likes={223}
-        messages={48}
-        shares={43} />
+        {videos.map(
+          ({ url, channel, description, song, likes, messages, shares }) => (
+            <Video
+              url={url}
+              channel={channel}
+              song={song}
+              likes={likes}
+              messages={messages}
+              description={description}
+              shares={shares}
+              />
+          )          
+        )}
       </div>
-      
-      {/* app container */}
-        {/* videos */}
-        {/* <Video /> */}
-        {/* <Video /> */}
-        {/* <Video /> */}
-        {/* <Video /> */}
-        {/* <Video /> */}
-
     </div>
   );
 }

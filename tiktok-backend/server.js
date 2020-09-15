@@ -1,16 +1,20 @@
-import express from "express";
-import mongoose from "mongoose";
+const express = require("express");
+const mongoose = require ("mongoose");
 
-import Data from './data.js';
-import Videos from "./dbModel.js";
-
+const Data = require("./data.js");
+const Videos = require("./dbModel.js");
 
 // app config
 const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 //middleware
 app.use(express.json());
+app.use((req, res, next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*'),
+    res.setHeader('Access-Control-Allow-Headers','*'),
+    next();
+});
 
 
 //DB config
@@ -27,6 +31,16 @@ mongoose.connect(connection_url, {
 app.get("/", (req, res) => res.status(200).send("hello world"));
 
 app.get ("/v1/posts", (req, res) => res.status(200).send(Data));
+
+app.get ("/v2/posts", (req, res) =>{
+    Videos.find((err, data)=>{
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(data);
+        }
+    });
+});
 
 //POST request to add data to the databse
 //will let us add a video document to the vidoes collection
